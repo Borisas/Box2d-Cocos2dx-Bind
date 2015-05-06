@@ -4,5 +4,7 @@
 #include "BPCircleObject.h"
 #include "BPRectangleObject.h"
 #include "BPControler.h"
+#include "external/Box2D/Box2D.h"
+
 
 #endif

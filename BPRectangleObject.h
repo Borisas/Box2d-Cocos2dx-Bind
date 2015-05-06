@@ -5,6 +5,7 @@
 #include "cocos2d.h"
 #include <functional>
 #include "BPAbstractBase.h"
+#include "BPStructures.h"
 
 USING_NS_CC;
 using namespace std;
@@ -16,10 +17,13 @@ public:
     static BPRectangle* createStatic(Size box, b2World* _to, const char* image);
     static BPRectangle* createDynamic(Size box, b2World* _to, const char* image);
     
+    BPRectangle* createStatic(Size box, b2World* _to, const char* image, BPMaterial _mat);
+    BPRectangle* createDynamic(Size box, b2World* _to, const char* image, BPMaterial _mat);
+    
     void setImage(const char* image);
     
     void assemble(Size box, b2World* to, bool dynamic);
-    
+    void assemble(Size box, b2World* _to, bool dynamic, BPMaterial _mat);
     void BPSetPosition(Vec2 position);
     void align();
     

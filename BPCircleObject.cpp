@@ -13,6 +13,18 @@ BPCircle* BPCircle::createDynamic(float radius, b2World* _to, const char* image)
     c->assemble(radius, _to,true);
     return c;
 }
+BPCircle* BPCircle::createDynamic(float radius, b2World* _to, const char* image, BPMaterial _mat){
+    auto c = new BPCircle;
+    c->setImage(image);
+    c->assemble(radius, _to,true, _mat);
+    return c;
+}
+BPCircle* BPCircle::createStatic(float radius, b2World* _to, const char* image, BPMaterial _mat){
+    auto c = new BPCircle;
+    c->setImage(image);
+    c->assemble(radius, _to,false, _mat);
+    return c;
+}
 void BPCircle::assemble(float radius, b2World* _to, bool dynamic){
     b2CircleShape ballShape;
     ballShape.m_radius = radius / SCALE_RATIO;
@@ -21,7 +33,26 @@ void BPCircle::assemble(float radius, b2World* _to, bool dynamic){
     ballFixture.friction=0.8f;
     ballFixture.restitution=1.f;
     ballFixture.shape=&ballShape;
+    b2BodyDef ballBodyDef;
+    if(dynamic)
+        ballBodyDef.type= b2_dynamicBody;
     
+    //ballBodyDef.position.Set(this->getPosition().x/SCALE_RATIO,this->getPosition().y/SCALE_RATIO);
+    if(image != NULL)
+        ballBodyDef.userData = image;
+    
+    this->body = _to->CreateBody(&ballBodyDef);
+    body->CreateFixture(&ballFixture);
+    body->SetGravityScale(10);
+}
+void BPCircle::assemble(float radius, b2World* _to, bool dynamic, BPMaterial _mat){
+    b2CircleShape ballShape;
+    ballShape.m_radius = radius / SCALE_RATIO;
+    b2FixtureDef ballFixture;
+    ballFixture.density=_mat.density;
+    ballFixture.friction=_mat.friction;
+    ballFixture.restitution=_mat.restitution;
+    ballFixture.shape=&ballShape;
     b2BodyDef ballBodyDef;
     if(dynamic)
         ballBodyDef.type= b2_dynamicBody;
