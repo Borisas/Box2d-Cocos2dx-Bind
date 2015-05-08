@@ -72,21 +72,21 @@ void BPRectangle::setImage(const char *image){
     this->addChild(this->image);
 }
 
-b2Body* BPRectangle::getBody(){
-    return this->body;
-}
-b2Fixture* BPRectangle::getFixture(){
-    return this->fx;
-}
-Sprite* BPRectangle::getSprite(){
-    return this->image;
-}
 void BPRectangle::setOnRefresh(std::function<void ()> _set){
     this->onRefresh = _set;
 }
 void BPRectangle::BPSetPosition(cocos2d::Vec2 position){
     this->setPosition(Vec2(position.x, position.y));
     this->body->SetTransform(b2Vec2(position.x/SCALE_RATIO, position.y/SCALE_RATIO), this->body->GetAngle());
+}
+b2Body* BPRectangle::BPGetBody(){
+    return this->body;
+}
+Sprite* BPRectangle::BPGetSprite(){
+    return this->image;
+}
+b2Fixture* BPRectangle::BPGetFixture(){
+    return this->fx;
 }
 void BPRectangle::align(){
     this->setPosition(Vec2(body->GetPosition().x * SCALE_RATIO,body->GetPosition().y * SCALE_RATIO));
@@ -95,4 +95,7 @@ void BPRectangle::align(){
 void BPRectangle::refresh(){
     align();
     onRefresh();
+}
+void BPRectangle::setUserData(void *_userData){
+    this->fixture.userData = _userData;
 }

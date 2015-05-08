@@ -42,17 +42,16 @@ void BPCircle::assemble(float radius, b2World* _to, bool dynamic){
         ballBodyDef.userData = image;
     
     this->body = _to->CreateBody(&ballBodyDef);
-    body->CreateFixture(&ballFixture);
+    fx = body->CreateFixture(&ballFixture);
     body->SetGravityScale(10);
 }
 void BPCircle::assemble(float radius, b2World* _to, bool dynamic, BPMaterial _mat){
     b2CircleShape ballShape;
     ballShape.m_radius = radius / SCALE_RATIO;
-    b2FixtureDef ballFixture;
-    ballFixture.density=_mat.density;
-    ballFixture.friction=_mat.friction;
-    ballFixture.restitution=_mat.restitution;
-    ballFixture.shape=&ballShape;
+    fixture.density=_mat.density;
+    fixture.friction=_mat.friction;
+    fixture.restitution=_mat.restitution;
+    fixture.shape=&ballShape;
     b2BodyDef ballBodyDef;
     if(dynamic)
         ballBodyDef.type= b2_dynamicBody;
@@ -62,7 +61,7 @@ void BPCircle::assemble(float radius, b2World* _to, bool dynamic, BPMaterial _ma
         ballBodyDef.userData = image;
     
     this->body = _to->CreateBody(&ballBodyDef);
-    body->CreateFixture(&ballFixture);
+    fx = body->CreateFixture(&fixture);
     body->SetGravityScale(10);
 }
 void BPCircle::setImage(const char *image){
@@ -70,18 +69,22 @@ void BPCircle::setImage(const char *image){
     this->addChild(this->image);
 }
 
-b2Body* BPCircle::getBody(){
-    return this->body;
-}
-Sprite* BPCircle::getSprite(){
-    return this->image;
-}
+
 void BPCircle::setOnRefresh(std::function<void ()> _set){
     this->onRefresh = _set;
 }
 void BPCircle::BPSetPosition(cocos2d::Vec2 position){
     this->setPosition(Vec2(position.x, position.y));
     this->body->SetTransform(b2Vec2(position.x/SCALE_RATIO, position.y/SCALE_RATIO), this->body->GetAngle());
+}
+b2Body* BPCircle::BPGetBody(){
+    return this->body;
+}
+Sprite* BPCircle::BPGetSprite(){
+    return this->image;
+}
+b2Fixture* BPCircle::BPGetFixture(){
+    return this->fx;
 }
 void BPCircle::align(){
     this->setPosition(Vec2(body->GetPosition().x * SCALE_RATIO,body->GetPosition().y * SCALE_RATIO));
@@ -107,4 +110,7 @@ void BPCircle::constantSpeed(float speed){
     
     body->SetLinearVelocity(setSpeedTo);
     
+}
+void BPCircle::setUserData(void *_userData){
+    this->fixture.userData = _userData;
 }

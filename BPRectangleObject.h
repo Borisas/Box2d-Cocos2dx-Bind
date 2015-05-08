@@ -25,14 +25,19 @@ public:
     void assemble(Size box, b2World* to, bool dynamic);
     void assemble(Size box, b2World* _to, bool dynamic, BPMaterial _mat);
     void BPSetPosition(Vec2 position);
+    virtual b2Body* BPGetBody();
+    virtual Sprite* BPGetSprite();
+    virtual b2Fixture* BPGetFixture();
+
+
+
     void align();
     
+    
+    void setUserData(void* _userData);
     void refresh();
     void setOnRefresh(std::function<void()> _set);
     
-    b2Body* getBody();
-    Sprite* getSprite();
-    b2Fixture* getFixture();
 private:
     b2BodyDef bodyDef;
 

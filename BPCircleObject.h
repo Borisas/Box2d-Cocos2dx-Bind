@@ -29,17 +29,20 @@ public:
     void assemble(float radius, b2World* to, bool dynamic, BPMaterial _mat);
     
     virtual void BPSetPosition(Vec2 position);
+    virtual b2Body* BPGetBody();
+    virtual Sprite* BPGetSprite();
+    virtual b2Fixture* BPGetFixture();
     void align();
     
     void refresh();
     void setOnRefresh(std::function<void()> _set);
     
     void constantSpeed(float speed);
-    
-    b2Body* getBody();
-    Sprite* getSprite();
+    void setUserData(void * _userData);
 private:
     b2BodyDef bodyDef;
+    b2FixtureDef fixture;
+    b2Fixture* fx;
     b2Body* body;
     Sprite* image = NULL;
     

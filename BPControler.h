@@ -20,6 +20,8 @@ public:
     static BPControl* create(b2World* to);
     
     void addBP(BPAbstract* _add);
+    void removeBP(int _id, Layer* remove);
+    int findBP(BPAbstract* find);
     
     void newDynamicCircle(float radius, const char* image, Layer* addTo, Vec2 pos);
     void newStaticCircle(float radius, const char* image, Layer* addTo, Vec2 pos);
