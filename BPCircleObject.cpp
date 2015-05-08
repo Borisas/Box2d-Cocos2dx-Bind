@@ -77,6 +77,13 @@ void BPCircle::BPSetPosition(cocos2d::Vec2 position){
     this->setPosition(Vec2(position.x, position.y));
     this->body->SetTransform(b2Vec2(position.x/SCALE_RATIO, position.y/SCALE_RATIO), this->body->GetAngle());
 }
+void BPCircle::BPRotate(float angle){
+    this->body->SetTransform(body->GetPosition(), angle);
+    this->image->setRotation(angle);
+}
+void BPCircle::BPScale(float scaleX, float scaleY){
+    
+}
 b2Body* BPCircle::BPGetBody(){
     return this->body;
 }

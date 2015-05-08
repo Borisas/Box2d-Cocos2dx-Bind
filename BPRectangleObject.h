@@ -24,7 +24,9 @@ public:
     
     void assemble(Size box, b2World* to, bool dynamic);
     void assemble(Size box, b2World* _to, bool dynamic, BPMaterial _mat);
-    void BPSetPosition(Vec2 position);
+    virtual void BPSetPosition(Vec2 position);
+    virtual void BPRotate(float angle);
+    virtual void BPScale(float scaleX, float scaleY);
     virtual b2Body* BPGetBody();
     virtual Sprite* BPGetSprite();
     virtual b2Fixture* BPGetFixture();

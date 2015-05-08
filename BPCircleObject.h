@@ -29,6 +29,8 @@ public:
     void assemble(float radius, b2World* to, bool dynamic, BPMaterial _mat);
     
     virtual void BPSetPosition(Vec2 position);
+    virtual void BPRotate(float angle);
+    virtual void BPScale(float scaleX, float scaleY);
     virtual b2Body* BPGetBody();
     virtual Sprite* BPGetSprite();
     virtual b2Fixture* BPGetFixture();
