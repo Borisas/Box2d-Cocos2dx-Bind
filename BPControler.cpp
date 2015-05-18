@@ -13,13 +13,22 @@ void BPControl::addBP(BPAbstract *_add){
 }
 void BPControl::removeBP(int _id, Layer* remove){
     if(_id < BP.size() && _id > 0){
-        remove->removeChild(BP[_id]->BPGetSprite());
+        remove->removeChild(BP[_id]->BPGetNode());
+        localWorldPointer->DestroyBody(BP[_id]->BPGetBody());
         BP.erase(BP.begin() + _id);
     }
 }
 int BPControl::findBP(BPAbstract *find){
     for(unsigned int i = 0; i < BP.size(); i++){
         if(BP[i]->BPGetBody() == find->BPGetBody()){
+            return i;
+        }
+    }
+    return NULL;
+}
+int BPControl::findBP(int find){
+    for(unsigned int i = 0; i < BP.size(); i++){
+        if(BP[i]->BPGetFixture()->GetTag() == find){
             return i;
         }
     }
@@ -42,6 +51,11 @@ void BPControl::newStaticCircle(float radius, const char* image, Layer* addTo, V
 void BPControl::refreshWorld(){
     for(unsigned int i = 0; i < this->BP.size(); i++){
         BP[i]->refresh();
+    }
+}
+void BPControl::enableAll(){
+    for(unsigned int i = 0; i < this->BP.size(); i++){
+        BP[i]->enable();
     }
 }
 void BPControl::BPOSetPosition(Vec2 pos, int element){

@@ -14,7 +14,11 @@ public:
     virtual b2Body* BPGetBody() = 0;
     virtual Sprite* BPGetSprite() = 0;
     virtual b2Fixture* BPGetFixture() = 0;
+    virtual Node* BPGetNode() = 0;
     
+    virtual void enable() = 0;
+    virtual void disable() = 0;
+    virtual bool isEnabled() = 0;
 };
 
 #endif /* defined(__GuidedCircle__BPAbstractBase__) */

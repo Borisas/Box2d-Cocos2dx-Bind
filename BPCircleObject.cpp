@@ -93,14 +93,28 @@ Sprite* BPCircle::BPGetSprite(){
 b2Fixture* BPCircle::BPGetFixture(){
     return this->fx;
 }
+Node* BPCircle::BPGetNode(){
+    return this;
+}
 void BPCircle::align(){
     this->setPosition(Vec2(body->GetPosition().x * SCALE_RATIO,body->GetPosition().y * SCALE_RATIO));
     this->setRotation(-1 * CC_RADIANS_TO_DEGREES(body->GetAngle()));
 }
+void BPCircle::enable(){
+    this->enabled = true;
+}
+void BPCircle::disable(){
+    this->enabled = false;
+}
+bool BPCircle::isEnabled(){
+    return enabled;
+}
 void BPCircle::refresh(){
-    align();
-    constantSpeed(10);
-    onRefresh();
+    if(enabled){
+        if(this->shouldAlign)
+            align();
+        onRefresh();
+    }
 }
 void BPCircle::constantSpeed(float speed){
     auto rot = body->GetLinearVelocity();
@@ -114,10 +128,16 @@ void BPCircle::constantSpeed(float speed){
     b2Vec2 setSpeedTo;
     setSpeedTo.x = speed * angleCos;
     setSpeedTo.y = speed * angleSin;
-    
+        
     body->SetLinearVelocity(setSpeedTo);
     
 }
 void BPCircle::setUserData(void *_userData){
     this->fixture.userData = _userData;
+}
+void BPCircle::disableAlign(){
+    this->shouldAlign = false;
+}
+void BPCircle::enableAlign(){
+    this->shouldAlign = true;
 }

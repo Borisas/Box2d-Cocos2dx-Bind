@@ -30,15 +30,22 @@ public:
     virtual b2Body* BPGetBody();
     virtual Sprite* BPGetSprite();
     virtual b2Fixture* BPGetFixture();
-
+    virtual Node* BPGetNode();
 
 
     void align();
     
+    void disableAlign();
+    void enableAlign();
+    void disable();
+    void enable();
+    bool isEnabled();
     
     void setUserData(void* _userData);
     void refresh();
     void setOnRefresh(std::function<void()> _set);
+    std::function<void()> onRefresh = [&](){};
+
     
 private:
     b2BodyDef bodyDef;
@@ -48,7 +55,8 @@ private:
     b2Fixture* fx;
     Sprite* image = NULL;
     
-    std::function<void()> onRefresh = [&](){};
+    bool shouldAlign = true;
     
+    bool enabled = true;
 };
 #endif /* defined(__GuidedCircle__BPRectangleObject__) */

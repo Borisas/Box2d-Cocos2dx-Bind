@@ -96,13 +96,34 @@ Sprite* BPRectangle::BPGetSprite(){
 b2Fixture* BPRectangle::BPGetFixture(){
     return this->fx;
 }
+Node* BPRectangle::BPGetNode(){
+    return this;
+}
+void BPRectangle::enable(){
+    this->enabled = true;
+}
+void BPRectangle::disable(){
+    this->enabled = false;
+}
+bool BPRectangle::isEnabled(){
+    return enabled;
+}
 void BPRectangle::align(){
     this->setPosition(Vec2(body->GetPosition().x * SCALE_RATIO,body->GetPosition().y * SCALE_RATIO));
     this->setRotation(-1 * CC_RADIANS_TO_DEGREES(body->GetAngle()));
 }
 void BPRectangle::refresh(){
-    align();
-    onRefresh();
+    if(enabled){
+        if(shouldAlign)
+            align();
+        onRefresh();
+    }
+}
+void BPRectangle::disableAlign(){
+    this->shouldAlign = false;
+}
+void BPRectangle::enableAlign(){
+    this->shouldAlign = true;
 }
 void BPRectangle::setUserData(void *_userData){
     this->fixture.userData = _userData;

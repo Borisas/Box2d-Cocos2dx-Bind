@@ -34,13 +34,23 @@ public:
     virtual b2Body* BPGetBody();
     virtual Sprite* BPGetSprite();
     virtual b2Fixture* BPGetFixture();
+    virtual Node* BPGetNode();
     void align();
     
     void refresh();
     void setOnRefresh(std::function<void()> _set);
     
+    void disableAlign();
+    void enableAlign();
+    
+    void disable();
+    void enable();
+    bool isEnabled();
+
     void constantSpeed(float speed);
     void setUserData(void * _userData);
+    std::function<void()> onRefresh = [&](){};
+
 private:
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
@@ -48,7 +58,8 @@ private:
     b2Body* body;
     Sprite* image = NULL;
     
-    std::function<void()> onRefresh = [&](){};
+    bool shouldAlign = true;
+    bool enabled = true;
 };
 
 
